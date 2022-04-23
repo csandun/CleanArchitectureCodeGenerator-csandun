@@ -1,26 +1,27 @@
-﻿<Window x:Class="CleanArchitecture.CodeGenerator.FileNameDialog"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:CleanArchitecture.CodeGenerator"
-        Title="Generate application features code" Height="125" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" SizeToContent="Width"
-        
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="CleanArchitecture.CodeGenerator.FileNameDialog"
+        Title="Generate application features code" Height="400" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" SizeToContent="Width"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         >
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition />
-            <ColumnDefinition Width="auto" />
-        </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left" Margin="5 0 0 0" VerticalAlignment="Center" Height="26" FontWeight="SemiBold" />
-        <ComboBox Grid.Row="0" IsEditable="True" Text="Select a entity name" Grid.Column="1" Name="selectName" VerticalContentAlignment="Center"  Height="23"  VerticalAlignment="Center" HorizontalAlignment="Stretch" MinWidth="160" />
-        <Button Grid.Row="0" IsEnabled="False" Grid.Column="2" Content="Create code" HorizontalAlignment="Center" Margin="10,0" VerticalAlignment="Center" Width="85" Height="23" IsDefault="True" Name="btnCreate" Click="Button_Click" />
 
-        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="lblTips" Content="Tips" HorizontalAlignment="Left" Margin="5,0" VerticalAlignment="Bottom" Height="26" />
-        
+
+        <Label Grid.Row="0" Grid.Column="0" x:Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="26" FontWeight="SemiBold"  Margin="10,10,10,0"/>
+        <ComboBox Grid.Row="0" IsEditable="True" Text="Select a entity name" x:Name="selectName" VerticalContentAlignment="Center"  Height="23"  VerticalAlignment="Top" MinWidth="160" Margin="10,40,10,0" SelectionChanged="selectName_SelectionChanged"/>
+        <Button Grid.Row="0" IsEnabled="False" Content="Create code" HorizontalAlignment="Left" Margin="305,351,0,0" VerticalAlignment="Top" Width="85" Height="23" IsDefault="True" x:Name="btnCreate" Click="Button_Click" />
+        <ListBox x:Name="listExtraSkills" ItemsSource="{Binding CheckList}"   Margin="12,97,8,76" av:ItemsSource="{av:SampleData ItemCount=5}" SelectionChanged="listExtraSkills_SelectionChanged">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox x:Name="chkitems" Content="{Binding TheText}" IsChecked="{Binding IsSelected}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Category&#xD;&#xA;" HorizontalAlignment="Left"  Margin="12,68,0,0" VerticalAlignment="Top" Width="79" Height="29" />
+
     </Grid>
 </Window>

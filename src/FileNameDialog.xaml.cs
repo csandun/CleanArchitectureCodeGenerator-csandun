@@ -1,13 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace CleanArchitecture.CodeGenerator
 {
-	public partial class FileNameDialog : Window
+	public class CheckListItem
 	{
+		public string TheText { get; set; }
+		public bool IsSelected { get; set; }
+	}
+
+
+	public partial class FileNameDialog : Window, INotifyPropertyChanged
+	{
+
+		List<CheckListItem> checkList;
+		public event PropertyChangedEventHandler PropertyChanged;
+		protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, e);
+			}
+		}
+
 		private const string DEFAULT_TEXT = "Select a entity name";
 		private static readonly List<string> _tips = new List<string> {
 	  	"Tip: CQRS stands for Command/Query Responsibility Segregation, and it's a wonderful thing",
@@ -18,9 +37,30 @@ namespace CleanArchitecture.CodeGenerator
 		  "Tip: An effective testing strategy that follows the testing pyramid",
 		};
 
+		//Property to bind to
+		public List<CheckListItem> CheckList {
+			get { return checkList; }
+			set { checkList = value; this.OnPropertyChanged(new PropertyChangedEventArgs("CheckList")); }
+		}
+
+		//Test data helper
+		List<CheckListItem> GenerateTestData()
+		{
+			List<CheckListItem> checkListItems = new List<CheckListItem>();
+			checkListItems.Add(new CheckListItem { TheText = "Create", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "Update", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "Delete", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false });
+			return checkListItems;
+		}
+
 		public FileNameDialog(string folder,string[] entities)
 		{
 			InitializeComponent();
+			CheckList = GenerateTestData();
+
 			lblFolder.Content = string.Format("{0}/", folder);
 			foreach(var item in entities)
 			{
@@ -34,7 +74,7 @@ namespace CleanArchitecture.CodeGenerator
 			{
 				Icon = BitmapFrame.Create(new Uri("pack://application:,,,/CleanArchitectureCodeGenerator;component/Resources/icon.png", UriKind.RelativeOrAbsolute));
 				Title = Vsix.Name;
-				SetRandomTip();
+
 
 				//txtName.Focus();
 				//txtName.CaretIndex = 0;
@@ -66,17 +106,22 @@ namespace CleanArchitecture.CodeGenerator
 
 		public string Input => selectName.SelectedItem?.ToString();
 
-		private void SetRandomTip()
-		{
-			Random rnd = new Random(DateTime.Now.GetHashCode());
-			int index = rnd.Next(_tips.Count);
-			lblTips.Content = _tips[index];
-		}
+		
 
 		private void Button_Click(object sender, RoutedEventArgs e)
 		{
 			DialogResult = true;
 			Close();
+		}
+
+		private void listExtraSkills_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+
+		}
+
+		private void selectName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+		{
+
 		}
 	}
 }

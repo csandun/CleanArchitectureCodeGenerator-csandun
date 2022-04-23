@@ -29,11 +29,27 @@ namespace CleanArchitecture.CodeGenerator
 		private const string _solutionItemsProjectName = "Solution Items";
 		private static readonly Regex _reservedFileNamePattern = new Regex($@"(?i)^(PRN|AUX|NUL|CON|COM\d|LPT\d)(\.|$)");
 		private static readonly HashSet<char> _invalidFileNameChars = new HashSet<char>(Path.GetInvalidFileNameChars());
+		public List<string> ActionList = new List<string> {
+			"Create",
+			"Update",
+			"Delete",
+			"GetAll",
+			"GetById",
+			"GetAllWithPagination"
+		};
+
+		private const string CommandProjectName = "Camms.Risk.Application.Command";
+		private const string QueryProjectName = "Camms.Risk.Application.Query";
+
+
+
 
 		public static DTE2 _dte;
 
 		protected async override System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
 		{
+
+			// starting point
 			await JoinableTaskFactory.SwitchToMainThreadAsync();
 
 			_dte = await GetServiceAsync(typeof(DTE)) as DTE2;
@@ -52,12 +68,28 @@ namespace CleanArchitecture.CodeGenerator
 		private void ExecuteAsync(object sender, EventArgs e)
 		{
 			NewItemTarget target = NewItemTarget.Create(_dte);
-			NewItemTarget domain= NewItemTarget.Create(_dte,"Domain");
-			var includes = new string[] { "IEntity", "AuditableEntity", "AuditableSoftDeleteEntity" };
+
+			if (!(target.Project?.Name == CommandProjectName || target.Project?.Name == QueryProjectName))
+			{
+				MessageBox.Show(
+							"Selected class library not expected one to generate files. It should be 'Camms.Risk.Application.Command' or 'Camms.Risk.Application.Query'",
+							Vsix.Name,
+							MessageBoxButton.OK,
+							MessageBoxImage.Error);
+			}
+
+
+			NewItemTarget domain = NewItemTarget.Create(_dte, "Camms.Risk.Domain.Entity");
+			//NewItemTarget domain= NewItemTarget.Create(_dte, "Domain");
+			//domain.Directory = @"C:\Developments\CAMMS\Camms.Risk\Camms.Risk\Camms.Risk.Domain.Entity";
+			// get all domain classes from domain project
+			var includes = new string[] { "IEntity" };
 			var entities = ProjectHelpers.GetEntities(domain.Project)
-				.Where(x=>includes.Contains(x.BaseName) && !includes.Contains(x.Name))
-				.Select(x=>x.Name)
+				//.Where(x=>includes.Contains(x.BaseName) && !includes.Contains(x.Name))
+				.Where(o => o.IsImplementedFromIEntity)
+				.Select(x => x.Name)
 				.Distinct().ToArray();
+
 			if (target == null)
 			{
 				MessageBox.Show(
@@ -68,7 +100,9 @@ namespace CleanArchitecture.CodeGenerator
 				return;
 			}
 
-			string input = PromptForFileName(target.Directory,entities).TrimStart('/', '\\').Replace("/", "\\");
+			var (input, actions) = PromptForFileName(target.Directory, entities);
+			input = input.TrimStart('/', '\\').Replace("/", "\\");
+			
 
 			if (string.IsNullOrEmpty(input))
 			{
@@ -83,44 +117,51 @@ namespace CleanArchitecture.CodeGenerator
 				{
 					var name = Path.GetFileNameWithoutExtension(inputname);
 					var nameofPlural = ProjectHelpers.Pluralize(name);
-					var events = new List<string>() {
-						$"Events/{name}CreatedEvent.cs",
-						$"Events/{name}DeletedEvent.cs",
-						$"Events/{name}UpdatedEvent.cs",
-						};
-					foreach (var item in events)
-					{
-						AddItemAsync(item, name, domain).Forget();
-					}
+
 
 					var list = new List<string>()
 					{
-						$"{nameofPlural}/Commands/AcceptChanges/AcceptChanges{name}Command.cs",
-						$"{nameofPlural}/Commands/AcceptChanges/AcceptChanges{name}CommandValidator.cs",
-						$"{nameofPlural}/Commands/AddEdit/AddEdit{name}Command.cs",
-						$"{nameofPlural}/Commands/AddEdit/AddEdit{name}CommandValidator.cs",
-						$"{nameofPlural}/Commands/Create/Create{name}Command.cs",
-						$"{nameofPlural}/Commands/Create/Create{name}CommandValidator.cs",
-						$"{nameofPlural}/Commands/Delete/Delete{name}Command.cs",
-						$"{nameofPlural}/Commands/Delete/Delete{name}CommandValidator.cs",
-						$"{nameofPlural}/Commands/Update/Update{name}Command.cs",
-						$"{nameofPlural}/Commands/Update/Update{name}CommandValidator.cs",
-						$"{nameofPlural}/Commands/Import/Import{nameofPlural}Command.cs",
-						$"{nameofPlural}/Commands/Import/Import{nameofPlural}CommandValidator.cs",
-						$"{nameofPlural}/Caching/{name}CacheKey.cs",
-						$"{nameofPlural}/DTOs/{name}Dto.cs",
-						$"{nameofPlural}/EventHandlers/{name}CreatedEventHandler.cs",
-						$"{nameofPlural}/EventHandlers/{name}UpdatedEventHandler.cs",
-						$"{nameofPlural}/EventHandlers/{name}DeletedEventHandler.cs",
-						$"{nameofPlural}/Queries/Export/Export{nameofPlural}Query.cs",
-						$"{nameofPlural}/Queries/GetAll/GetAll{nameofPlural}Query.cs",
-						$"{nameofPlural}/Queries/Pagination/{nameofPlural}PaginationQuery.cs",
+						$"{name}/Commands/AcceptChanges/AcceptChanges{name}Command.cs",
+						//$"{name}/Commands/AcceptChanges/AcceptChanges{name}CommandValidator.cs",
+						//$"{name}/Commands/AddEdit/AddEdit{name}Command.cs",
+						//$"{name}/Commands/AddEdit/AddEdit{name}CommandValidator.cs",
+						//$"{name}/Commands/Create/Create{name}Command.cs",
+						//$"{name}/Commands/Create/Create{name}CommandValidator.cs",
+						//$"{name}/Commands/Delete/Delete{name}Command.cs",
+						//$"{name}/Commands/Delete/Delete{name}CommandValidator.cs",
+						//$"{name}/Commands/Update/Update{name}Command.cs",
+						//$"{name}/Commands/Update/Update{name}CommandValidator.cs",
+						//$"{name}/Commands/Import/Import{nameofPlural}Command.cs",
+						//$"{name}/Commands/Import/Import{nameofPlural}CommandValidator.cs",
+						//$"{name}/Caching/{name}CacheKey.cs",
+						//$"{name}/DTOs/{name}Dto.cs",
+						//$"{name}/EventHandlers/{name}CreatedEventHandler.cs",
+						//$"{name}/EventHandlers/{name}UpdatedEventHandler.cs",
+						//$"{name}/EventHandlers/{name}DeletedEventHandler.cs",
+						//$"{name}/Queries/Export/Export{nameofPlural}Query.cs",
+						//$"{name}/Queries/GetAll/GetAll{nameofPlural}Query.cs",
+						//$"{name}/Queries/Pagination/{nameofPlural}PaginationQuery.cs",
 					};
-					foreach (var item in list)
+
+					foreach (var item in actions)
 					{
-						AddItemAsync(item, name, target).Forget();
+						var fileName = "";
+						switch (item)
+						{
+							case "Create": fileName = $"{name}/Create{name}CommandHandler.cs"; break;
+							case "CreateValidator": fileName = $"{name}/Create{name}CommandValidator.cs"; break;
+							case "Update": fileName = $"{name}/Update{name}CommandHandler.cs"; break;
+							case "UpdateValidator": fileName = $"{name}/Update{name}CommandValidator.cs"; break;
+							case "Delete": fileName = $"{name}/Delete{name}CommandHandler.cs"; break;							
+							case "GetAll": fileName = $"{name}/GetAll{nameofPlural}QueryHandler.cs"; break;
+							case "GetById": fileName = $"{name}/Get{name}ByIdQueryHandler.cs"; break;
+							case "GetAllWithPagination": fileName = $"{name}/Get{nameofPlural}QueryHandler.cs"; break;
+							default: throw new Exception("Invalid action!.");
+						}
+
+						AddItemAsync(fileName, name, target, item).Forget();
 					}
-					
+
 
 				}
 				catch (Exception ex) when (!ErrorHandler.IsCriticalException(ex))
@@ -135,7 +176,7 @@ namespace CleanArchitecture.CodeGenerator
 			}
 		}
 
-		private async Task AddItemAsync(string name,string itemname, NewItemTarget target)
+		private async Task AddItemAsync(string name, string itemname, NewItemTarget target, string action)
 		{
 			// The naming rules that apply to files created on disk also apply to virtual solution folders,
 			// so regardless of what type of item we are creating, we need to validate the name.
@@ -149,13 +190,13 @@ namespace CleanArchitecture.CodeGenerator
 				}
 				else
 				{
-					 
+
 					AddProjectFolder(name, target);
 				}
 			}
 			else
 			{
-				await AddFileAsync(name, itemname, target);
+				await AddFileAsync(name, itemname, target, action);
 			}
 		}
 
@@ -179,9 +220,11 @@ namespace CleanArchitecture.CodeGenerator
 			} while (!string.IsNullOrEmpty(path));
 		}
 
-		private async System.Threading.Tasks.Task AddFileAsync(string name,string itemname, NewItemTarget target)
+		private async System.Threading.Tasks.Task AddFileAsync(string name, string itemname, NewItemTarget target, string action)
 		{
 			await JoinableTaskFactory.SwitchToMainThreadAsync();
+			//target.Directory = target.Directory.Replace("Commands\\AcceptChanges\\", "");
+			//name = name.Replace("Commands/AcceptChanges/", "");
 			FileInfo file;
 
 			// If the file is being added to a solution folder, but that
@@ -193,6 +236,8 @@ namespace CleanArchitecture.CodeGenerator
 			}
 			else
 			{
+
+
 				file = new FileInfo(Path.Combine(target.Directory, name));
 			}
 
@@ -213,7 +258,7 @@ namespace CleanArchitecture.CodeGenerator
 					project = target.Project;
 				}
 
-				int position = await WriteFileAsync(project, file.FullName, itemname, target.Directory);
+				int position = await WriteFileAsync(project, file.FullName, itemname, target.Directory, action);
 				if (target.ProjectItem != null && target.ProjectItem.IsKind(Constants.vsProjectItemKindVirtualFolder))
 				{
 					target.ProjectItem.ProjectItems.AddFromFile(file.FullName);
@@ -222,6 +267,11 @@ namespace CleanArchitecture.CodeGenerator
 				{
 					project.AddFileToProject(file);
 				}
+
+				//target.Directory = target.Directory.Replace("Commands\\AcceptChanges\\", "");
+				//name = name.Replace("Commands/AcceptChanges/", "");
+				file = new FileInfo(Path.Combine(target.Directory, name));
+
 
 				VsShellUtilities.OpenDocument(this, file.FullName);
 
@@ -245,9 +295,9 @@ namespace CleanArchitecture.CodeGenerator
 			}
 		}
 
-		private static async Task<int> WriteFileAsync(Project project, string file,string itemname,string selectFolder)
+		private static async Task<int> WriteFileAsync(Project project, string file, string itemname, string selectFolder, string action)
 		{
-			string template = await TemplateMap.GetTemplateFilePathAsync(project, file, itemname, selectFolder);
+			string template = await TemplateMap.GetTemplateFilePathAsync(project, file, itemname, selectFolder, action);
 
 			if (!string.IsNullOrEmpty(template))
 			{
@@ -269,6 +319,7 @@ namespace CleanArchitecture.CodeGenerator
 
 		private static async System.Threading.Tasks.Task WriteToDiskAsync(string file, string content)
 		{
+			file = file.Replace("Commands\\AcceptChanges\\", "");
 			using (StreamWriter writer = new StreamWriter(file, false, GetFileEncoding(file)))
 			{
 				await writer.WriteAsync(content);
@@ -397,7 +448,7 @@ namespace CleanArchitecture.CodeGenerator
 			return results.ToArray();
 		}
 
-		private string PromptForFileName(string folder,string[] entities)
+		private (string, List<string>) PromptForFileName(string folder, string[] entities)
 		{
 			DirectoryInfo dir = new DirectoryInfo(folder);
 			FileNameDialog dialog = new FileNameDialog(dir.Name, entities);
@@ -407,7 +458,16 @@ namespace CleanArchitecture.CodeGenerator
 			dialog.Owner = Application.Current.MainWindow;
 
 			bool? result = dialog.ShowDialog();
-			return (result.HasValue && result.Value) ? dialog.Input : string.Empty;
+			var inputValue = string.Empty;
+			var selectedCommands = new List<string>();
+			var selectedQueryies = new List<string>();
+			if (result.HasValue && result.Value)
+			{
+				inputValue = dialog.Input;
+				selectedCommands = dialog.CheckList.Where(o => o.IsSelected).Select(p => p.TheText).ToList();
+			}
+
+			return (inputValue, selectedCommands);
 		}
 
 		private void ExecuteCommandIfAvailable(string commandName)

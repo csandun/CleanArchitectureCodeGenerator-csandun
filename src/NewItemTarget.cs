@@ -40,6 +40,7 @@ namespace CleanArchitecture.CodeGenerator
 		}
 		private static NewItemTarget CreateFromProject(DTE2 dte, string projectName)
 		{
+			// give project of the execution -> right click
 			Project project = dte.Solution.FindProject(projectName);
 			if (project != null)
 			{
@@ -175,7 +176,7 @@ namespace CleanArchitecture.CodeGenerator
 			IsSolutionOrSolutionFolder = isSolutionOrSolutionFolder;
 		}
 
-		public string Directory { get; }
+		public string Directory { get; set; }
 
 		public Project Project { get; }
 

@@ -1,37 +1,42 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿using AutoMapper;
+using Camms.Risk.Application.Dto.Common;
+using Camms.Risk.Application.Repository;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
-using {selectns}.{nameofPlural}.DTOs;
-
-namespace {namespace};
-
-    public class Create{itemname}Command: {itemname}Dto,IRequest<Result<int>>, IMapFrom<{itemname}>
+namespace {namespace}
+{
+    public class Create{itemname}Command : IRequest<CreatedResponseDto>
     {
-       
+        // TODO: Put your {itemname}'s properties here.
     }
-    
-    public class Create{itemname}CommandHandler : IRequestHandler<Create{itemname}Command, Result<int>>
+
+    public class Create{itemname}CommandHandler : IRequestHandler<Create{itemname}Command, CreatedResponseDto>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IRiskUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Create{itemname}Command> _localizer;
+        private readonly ILogger<Create{itemname}CommandHandler> _logger;
+
         public Create{itemname}CommandHandler(
-            IApplicationDbContext context,
-            IStringLocalizer<Create{itemname}Command> localizer,
-            IMapper mapper
+            IRiskUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            ILogger<Create{itemname}CommandHandler> logger
             )
         {
-            _context = context;
-            _localizer = localizer;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _logger = logger;
         }
-        public async Task<Result<int>> Handle(Create{itemname}Command request, CancellationToken cancellationToken)
+
+        public async Task<CreatedResponseDto> Handle(Create{itemname}Command command, CancellationToken cancellationToken)
         {
-           //TODO:Implementing Create{itemname}CommandHandler method 
-           var item = _mapper.Map<{itemname}>(request);
-           _context.{nameofPlural}.Add(item);
-           await _context.SaveChangesAsync(cancellationToken);
-           return  Result<int>.Success(item.Id);
+           // TODO:Implementing Create{itemname}CommandHandler method further more. 
+
+           var entity = _mapper.Map<Create{itemname}Command, Camms.Risk.Domain.Entity.{itemname}>(command);
+           entity.IsDeleted = false;
+           var insertedEntity = await _unitOfWork.{itemname}Repository.InsertAsync(entity);
+           await _unitOfWork.SaveChangesAsync();           
+           return  new CreatedResponseDto() { Id = insertedEntity.Id };
         }
     }
-
+}

@@ -14,8 +14,9 @@ namespace CleanArchitecture.CodeGenerator.Models
         public string Summary { get; set; }
         public IList<IntellisenseProperty> Properties { get; private set; }
         public HashSet<string> References { get; private set; }
+		public bool IsImplementedFromIEntity { get; set; }
 
-        public IntellisenseObject()
+		public IntellisenseObject()
         {
             Properties = new List<IntellisenseProperty>();
             References = new HashSet<string>();

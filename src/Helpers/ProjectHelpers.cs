@@ -124,6 +124,7 @@ namespace CleanArchitecture.CodeGenerator.Helpers
 			{
 				return _dte.Solution.FindProjectItem(file.FullName);
 			}
+			
 
 			string root = project.GetRootFolder();
 
@@ -205,7 +206,7 @@ namespace CleanArchitecture.CodeGenerator.Helpers
 			foreach (Project project in projects)
 			{
 				var projectName = project.Name;
-				if (projectName == name)
+				if (projectName == name && project.Kind != ProjectKinds.vsProjectKindSolutionFolder)
 				{
 					return project;
 				}

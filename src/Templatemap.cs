@@ -34,7 +34,7 @@ namespace CleanArchitecture.CodeGenerator
 		}
 		
 
-		public static async Task<string> GetTemplateFilePathAsync(Project project, string file,string itemname,string selectFolder)
+		public static async Task<string> GetTemplateFilePathAsync(Project project, string file,string itemname,string selectFolder, string action)
 		{
 			var templatefolders =new string[]{
 				"Commands\\AcceptChanges",
@@ -61,33 +61,63 @@ namespace CleanArchitecture.CodeGenerator
 
 			AddTemplatesFromCurrentFolder(list, Path.GetDirectoryName(file));
 
-			// Look for direct file name matches
-			if (list.Any(f => {
-				 var pattern = templatefolders.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0).First().Replace("\\","\\\\");
-				 var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
-				 return result;
-			 
-				}) )
+			var mockPath = string.Empty;
+			switch (action)
 			{
-				var tmplFile = list.OrderByDescending(x=>x).FirstOrDefault(f => {
-					var pattern = templatefolders.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0).First().Replace("\\", "\\\\"); ;
-					var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
-					if (result)
-					{
-						return Path.GetFileNameWithoutExtension(f).Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).All(x=>name.IndexOf(x, StringComparison.OrdinalIgnoreCase)>=0);
-					}
-					return false;
-				});
-				templateFile = tmplFile;  //Path.Combine(Path.GetDirectoryName(tmplFile), name + _defaultExt);//GetTemplate(name);
+				case "Create" :
+					mockPath = @"Templates\Commands\Create";
+					break;
+				case "Update":
+					mockPath = @"Templates\Commands\Update";
+					break;				
+				case "Delete":
+					mockPath = @"Templates\Commands\Delete";
+					break;
+
 			}
 
-			// Look for file extension matches
-			else if (list.Any(f => Path.GetFileName(f).Equals(extension + _defaultExt, StringComparison.OrdinalIgnoreCase)))
-			{
-				var tmplFile = list.FirstOrDefault(f => Path.GetFileName(f).Equals(extension + _defaultExt, StringComparison.OrdinalIgnoreCase) && File.Exists(f));
-				var tmpl = AdjustForSpecific(safeName, extension);
-				templateFile = Path.Combine(Path.GetDirectoryName(tmplFile), tmpl + _defaultExt); //GetTemplate(tmpl);
-			}
+			templateFile = list.ToList().Find(o => o.Contains(mockPath));
+			
+
+			
+
+			
+
+
+
+			//var templateFile1 = @"c:\users\chathurangasandun\appdata\local\microsoft\visualstudio\17.0_4353518fexp\extensions\neozhu\cleanarchitecture codegenerator\0.1\Templates\Commands\AcceptChanges\.cs.txt";
+			
+
+
+			//Look for direct file name matches
+			//if (list.Any(f => {
+			//	var pattern = templatefolders.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0).First().Replace("\\", "\\\\");
+			//	var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
+			//	return result;
+
+			//}))
+			//{
+			//	var tmplFile = list.OrderByDescending(x => x).FirstOrDefault(f => {
+			//		var pattern = templatefolders.Where(x => relative.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0).First().Replace("\\", "\\\\"); ;
+			//		var result = Regex.IsMatch(f, pattern, RegexOptions.IgnoreCase);
+			//		if (result)
+			//		{
+			//			return Path.GetFileNameWithoutExtension(f).Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).All(x => name.IndexOf(x, StringComparison.OrdinalIgnoreCase) >= 0);
+			//		}
+			//		return false;
+			//	});
+
+			//	//templateFile = tmplFile;  //Path.Combine(Path.GetDirectoryName(tmplFile), name + _defaultExt);//GetTemplate(name);
+			//	templateFile = @"c:\users\chathurangasandun\appdata\local\microsoft\visualstudio\17.0_4353518fexp\extensions\neozhu\cleanarchitecture codegenerator\0.1\Templates\Commands\AcceptChanges\.cs.txt";
+			//}
+
+			//// Look for file extension matches
+			//else if (list.Any(f => Path.GetFileName(f).Equals(extension + _defaultExt, StringComparison.OrdinalIgnoreCase)))
+			//{
+			//	var tmplFile = list.FirstOrDefault(f => Path.GetFileName(f).Equals(extension + _defaultExt, StringComparison.OrdinalIgnoreCase) && File.Exists(f));
+			//	var tmpl = AdjustForSpecific(safeName, extension);
+			//	templateFile = Path.Combine(Path.GetDirectoryName(tmplFile), tmpl + _defaultExt); //GetTemplate(tmpl);
+			//}
 
 			var template = await ReplaceTokensAsync(project, itemname, relative, selectRelative, templateFile);
 			return NormalizeLineEndings(template);
