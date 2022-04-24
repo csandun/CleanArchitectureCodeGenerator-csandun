@@ -121,6 +121,10 @@
     <Content Include="Templates\Commands\AcceptChanges\.validator.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Templates\Queries\Pagination\.handler.cs.txt" />
+    <Resource Include="Templates\Commands\Create\.handler.cs.txt" />
+    <Resource Include="Templates\Commands\Delete\.handler.cs.txt" />
+    <Resource Include="Templates\Commands\Update\.handler.cs.txt" />
     <Content Include="Templates\Events\.deletedevent.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -142,6 +146,9 @@
     <Content Include="Templates\Queries\Export\.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Resource Include="Templates\Queries\GetAll\.handler.cs.txt" />
+    <Resource Include="Templates\Queries\GetById\.cs.txt" />
+    <Resource Include="Templates\Queries\GetById\.handler.cs.txt" />
     <Content Include="Templates\Queries\Pagination\.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

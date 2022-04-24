@@ -11,7 +11,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <CommandName>AddFeaturesClassFile</CommandName>
-                    <ButtonText>New Application Features...</ButtonText>
+                    <ButtonText>New Command/Query usecase...</ButtonText>
                 </Strings>
             </Button>
         </Buttons>

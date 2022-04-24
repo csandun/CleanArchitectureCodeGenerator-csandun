@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.CodeGenerator.Helpers;
+using CleanArchitecture.CodeGenerator.Models;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft;
@@ -115,51 +116,67 @@ namespace CleanArchitecture.CodeGenerator
 			{
 				try
 				{
+					
+
+
+					//var list = new List<string>()
+					//{
+					//	$"{name}/Commands/AcceptChanges/AcceptChanges{name}Command.cs",
+					//	//$"{name}/Commands/AcceptChanges/AcceptChanges{name}CommandValidator.cs",
+					//	//$"{name}/Commands/AddEdit/AddEdit{name}Command.cs",
+					//	//$"{name}/Commands/AddEdit/AddEdit{name}CommandValidator.cs",
+					//	//$"{name}/Commands/Create/Create{name}Command.cs",
+					//	//$"{name}/Commands/Create/Create{name}CommandValidator.cs",
+					//	//$"{name}/Commands/Delete/Delete{name}Command.cs",
+					//	//$"{name}/Commands/Delete/Delete{name}CommandValidator.cs",
+					//	//$"{name}/Commands/Update/Update{name}Command.cs",
+					//	//$"{name}/Commands/Update/Update{name}CommandValidator.cs",
+					//	//$"{name}/Commands/Import/Import{nameofPlural}Command.cs",
+					//	//$"{name}/Commands/Import/Import{nameofPlural}CommandValidator.cs",
+					//	//$"{name}/Caching/{name}CacheKey.cs",
+					//	//$"{name}/DTOs/{name}Dto.cs",
+					//	//$"{name}/EventHandlers/{name}CreatedEventHandler.cs",
+					//	//$"{name}/EventHandlers/{name}UpdatedEventHandler.cs",
+					//	//$"{name}/EventHandlers/{name}DeletedEventHandler.cs",
+					//	//$"{name}/Queries/Export/Export{nameofPlural}Query.cs",
+					//	//$"{name}/Queries/GetAll/GetAll{nameofPlural}Query.cs",
+					//	//$"{name}/Queries/Pagination/{nameofPlural}PaginationQuery.cs",
+					//};
+
+
+
 					var name = Path.GetFileNameWithoutExtension(inputname);
 					var nameofPlural = ProjectHelpers.Pluralize(name);
 
-
-					var list = new List<string>()
-					{
-						$"{name}/Commands/AcceptChanges/AcceptChanges{name}Command.cs",
-						//$"{name}/Commands/AcceptChanges/AcceptChanges{name}CommandValidator.cs",
-						//$"{name}/Commands/AddEdit/AddEdit{name}Command.cs",
-						//$"{name}/Commands/AddEdit/AddEdit{name}CommandValidator.cs",
-						//$"{name}/Commands/Create/Create{name}Command.cs",
-						//$"{name}/Commands/Create/Create{name}CommandValidator.cs",
-						//$"{name}/Commands/Delete/Delete{name}Command.cs",
-						//$"{name}/Commands/Delete/Delete{name}CommandValidator.cs",
-						//$"{name}/Commands/Update/Update{name}Command.cs",
-						//$"{name}/Commands/Update/Update{name}CommandValidator.cs",
-						//$"{name}/Commands/Import/Import{nameofPlural}Command.cs",
-						//$"{name}/Commands/Import/Import{nameofPlural}CommandValidator.cs",
-						//$"{name}/Caching/{name}CacheKey.cs",
-						//$"{name}/DTOs/{name}Dto.cs",
-						//$"{name}/EventHandlers/{name}CreatedEventHandler.cs",
-						//$"{name}/EventHandlers/{name}UpdatedEventHandler.cs",
-						//$"{name}/EventHandlers/{name}DeletedEventHandler.cs",
-						//$"{name}/Queries/Export/Export{nameofPlural}Query.cs",
-						//$"{name}/Queries/GetAll/GetAll{nameofPlural}Query.cs",
-						//$"{name}/Queries/Pagination/{nameofPlural}PaginationQuery.cs",
-					};
-
 					foreach (var item in actions)
 					{
-						var fileName = "";
-						switch (item)
-						{
-							case "Create": fileName = $"{name}/Create{name}CommandHandler.cs"; break;
-							case "CreateValidator": fileName = $"{name}/Create{name}CommandValidator.cs"; break;
-							case "Update": fileName = $"{name}/Update{name}CommandHandler.cs"; break;
-							case "UpdateValidator": fileName = $"{name}/Update{name}CommandValidator.cs"; break;
-							case "Delete": fileName = $"{name}/Delete{name}CommandHandler.cs"; break;							
-							case "GetAll": fileName = $"{name}/GetAll{nameofPlural}QueryHandler.cs"; break;
-							case "GetById": fileName = $"{name}/Get{name}ByIdQueryHandler.cs"; break;
-							case "GetAllWithPagination": fileName = $"{name}/Get{nameofPlural}QueryHandler.cs"; break;
-							default: throw new Exception("Invalid action!.");
+
+						var templates = TemplateModelExtensions.Templates.Where(o => o.Action == item);
+                        foreach (var template in templates)
+                        {
+							// replace template file names
+							template.FilePath = template.FilePath.Replace("$NAME", name).Replace("$NAME_OF_PLURAL", nameofPlural);
+
+							// add item async
+							AddItemAsync(template.FilePath, name, target, item, template).Forget();
 						}
 
-						AddItemAsync(fileName, name, target, item).Forget();
+
+						//var fileName = "";
+						//switch (item)
+						//{
+						//	case "Create": fileName = $"{name}/Create{name}CommandHandler.cs"; break;
+						//	case "CreateValidator": fileName = $"{name}/Create{name}CommandValidator.cs"; break;
+						//	case "Update": fileName = $"{name}/Update{name}CommandHandler.cs"; break;
+						//	case "UpdateValidator": fileName = $"{name}/Update{name}CommandValidator.cs"; break;
+						//	case "Delete": fileName = $"{name}/Delete{name}CommandHandler.cs"; break;							
+						//	case "GetAll": fileName = $"{name}/GetAll{nameofPlural}QueryHandler.cs"; break;
+						//	case "GetById": fileName = $"{name}/Get{name}ByIdQueryHandler.cs"; break;
+						//	case "GetAllWithPagination": fileName = $"{name}/Get{nameofPlural}QueryHandler.cs"; break;
+						//	default: throw new Exception("Invalid action!.");
+						//}
+
+						//AddItemAsync(fileName, name, target, item).Forget();
 					}
 
 
@@ -176,7 +193,7 @@ namespace CleanArchitecture.CodeGenerator
 			}
 		}
 
-		private async Task AddItemAsync(string name, string itemname, NewItemTarget target, string action)
+		private async Task AddItemAsync(string name, string itemname, NewItemTarget target, string action, TemplateModel template)
 		{
 			// The naming rules that apply to files created on disk also apply to virtual solution folders,
 			// so regardless of what type of item we are creating, we need to validate the name.
@@ -196,7 +213,7 @@ namespace CleanArchitecture.CodeGenerator
 			}
 			else
 			{
-				await AddFileAsync(name, itemname, target, action);
+				await AddFileAsync(name, itemname, target, action, template);
 			}
 		}
 
@@ -220,7 +237,7 @@ namespace CleanArchitecture.CodeGenerator
 			} while (!string.IsNullOrEmpty(path));
 		}
 
-		private async System.Threading.Tasks.Task AddFileAsync(string name, string itemname, NewItemTarget target, string action)
+		private async System.Threading.Tasks.Task AddFileAsync(string name, string itemname, NewItemTarget target, string action, TemplateModel template)
 		{
 			await JoinableTaskFactory.SwitchToMainThreadAsync();
 			//target.Directory = target.Directory.Replace("Commands\\AcceptChanges\\", "");
@@ -258,7 +275,7 @@ namespace CleanArchitecture.CodeGenerator
 					project = target.Project;
 				}
 
-				int position = await WriteFileAsync(project, file.FullName, itemname, target.Directory, action);
+				int position = await WriteFileAsync(project, file.FullName, itemname, target.Directory, action, template);
 				if (target.ProjectItem != null && target.ProjectItem.IsKind(Constants.vsProjectItemKindVirtualFolder))
 				{
 					target.ProjectItem.ProjectItems.AddFromFile(file.FullName);
@@ -293,20 +310,20 @@ namespace CleanArchitecture.CodeGenerator
 			}
 		}
 
-		private static async Task<int> WriteFileAsync(Project project, string file, string itemname, string selectFolder, string action)
+		private static async Task<int> WriteFileAsync(Project project, string file, string itemname, string selectFolder, string action, TemplateModel template)
 		{
-			string template = await TemplateMap.GetTemplateFilePathAsync(project, file, itemname, selectFolder, action);
+			string templateContent = await TemplateMap.GetTemplateFilePathAsync(project, file, itemname, selectFolder, action, template);
 
-			if (!string.IsNullOrEmpty(template))
+			if (!string.IsNullOrEmpty(templateContent))
 			{
-				int index = template.IndexOf('$');
+				int index = templateContent.IndexOf('$');
 
 				if (index > -1)
 				{
-					template = template.Remove(index, 1);
+					templateContent = templateContent.Remove(index, 1);
 				}
 
-				await WriteToDiskAsync(file, template);
+				await WriteToDiskAsync(file, templateContent);
 				return index;
 			}
 

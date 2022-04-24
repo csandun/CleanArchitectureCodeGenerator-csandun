@@ -1,0 +1,37 @@
+﻿using AutoMapper;
+using Camms.Risk.Application.Dto.Common;
+using Camms.Risk.Application.Repository;
+using MediatR;
+using Microsoft.Extensions.Logging;
+
+namespace {namespace}
+{
+    public class Create{itemname}CommandHandler : IRequestHandler<Create{itemname}Command, CreatedResponseDto>
+    {
+        private readonly IRiskUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
+        private readonly ILogger<Create{itemname}CommandHandler> _logger;
+
+        public Create{itemname}CommandHandler(
+            IRiskUnitOfWork unitOfWork, 
+            IMapper mapper, 
+            ILogger<Create{itemname}CommandHandler> logger
+            )
+        {
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _logger = logger;
+        }
+
+        public async Task<CreatedResponseDto> Handle(Create{itemname}Command command, CancellationToken cancellationToken)
+        {
+           // TODO:Implementing Create{itemname}CommandHandler method further more. 
+
+           var entity = _mapper.Map<Create{itemname}Command, Camms.Risk.Domain.Entity.{itemname}>(command);
+           entity.IsDeleted = false;
+           var insertedEntity = await _unitOfWork.{itemname}Repository.InsertAsync(entity);
+           await _unitOfWork.SaveChangesAsync();           
+           return  new CreatedResponseDto() { Id = insertedEntity.Id };
+        }
+    }
+}

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CleanArchitecture.CodeGenerator.Helpers;
+using CleanArchitecture.CodeGenerator.Models;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 
@@ -34,54 +35,19 @@ namespace CleanArchitecture.CodeGenerator
 		}
 		
 
-		public static async Task<string> GetTemplateFilePathAsync(Project project, string file,string itemname,string selectFolder, string action)
-		{
-			var templatefolders =new string[]{
-				"Commands\\AcceptChanges",
-				"Commands\\Create",
-				"Commands\\Delete",
-				"Commands\\Update",
-				"Commands\\AddEdit",
-				"Commands\\Import",
-				"DTOs",
-				"Caching",
-				"EventHandlers",
-				"Events",
-				"Queries\\Export",
-				"Queries\\GetAll",
-				"Queries\\Pagination",
-				};
+		public static async Task<string> GetTemplateFilePathAsync(Project project, string file,string itemname,string selectFolder, string action, TemplateModel template)
+		{	
 			var extension = Path.GetExtension(file).ToLowerInvariant();
 			var name = Path.GetFileName(file);
 			var safeName = name.StartsWith(".") ? name : Path.GetFileNameWithoutExtension(file);
 			var relative = PackageUtilities.MakeRelative(project.GetRootFolder(), Path.GetDirectoryName(file) ?? "");
-			var selectRelative = PackageUtilities.MakeRelative(project.GetRootFolder(), selectFolder ?? "");
-			string templateFile = null;
+			var selectRelative = PackageUtilities.MakeRelative(project.GetRootFolder(), selectFolder ?? "");			
+			
 			var list = _templateFiles.ToList();
-
+			
 			AddTemplatesFromCurrentFolder(list, Path.GetDirectoryName(file));
-
-			var mockPath = string.Empty;
-			switch (action)
-			{
-				case "Create" :
-					mockPath = @"Templates\Commands\Create";
-					break;
-				case "Update":
-					mockPath = @"Templates\Commands\Update";
-					break;				
-				case "Delete":
-					mockPath = @"Templates\Commands\Delete";
-					break;
-			}
-
-			templateFile = list.ToList().Find(o => o.Contains(mockPath));
 			
-
-			
-
-			
-
+			var templateFile = list.FirstOrDefault(o => o.Contains(template.TemplatePath));
 
 
 			//var templateFile1 = @"c:\users\chathurangasandun\appdata\local\microsoft\visualstudio\17.0_4353518fexp\extensions\neozhu\cleanarchitecture codegenerator\0.1\Templates\Commands\AcceptChanges\.cs.txt";
@@ -118,8 +84,8 @@ namespace CleanArchitecture.CodeGenerator
 			//	templateFile = Path.Combine(Path.GetDirectoryName(tmplFile), tmpl + _defaultExt); //GetTemplate(tmpl);
 			//}
 
-			var template = await ReplaceTokensAsync(project, itemname, relative, selectRelative, templateFile);
-			return NormalizeLineEndings(template);
+			var resolvedTemplateContent = await ReplaceTokensAsync(project, itemname, relative, selectRelative, templateFile);
+			return NormalizeLineEndings(resolvedTemplateContent);
 		}
 
 		private static void AddTemplatesFromCurrentFolder(List<string> list, string dir)
