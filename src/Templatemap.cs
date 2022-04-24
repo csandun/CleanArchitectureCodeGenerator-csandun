@@ -14,7 +14,7 @@ namespace CleanArchitecture.CodeGenerator
 {
 	internal static class TemplateMap
 	{
-		private static readonly string _folder;
+		private static  string _folder;
 		private static readonly List<string> _templateFiles = new List<string>();
 		private const string _defaultExt = ".txt";
 		private const string _templateDir = ".templates";
@@ -36,7 +36,25 @@ namespace CleanArchitecture.CodeGenerator
 		
 
 		public static async Task<string> GetTemplateFilePathAsync(Project project, string file,string itemname,string selectFolder, string action, TemplateModel template)
-		{	
+		{
+
+
+
+			var folder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+			var userProfile = Path.Combine(folder, ".vs", _templateDir);
+
+			if (Directory.Exists(userProfile))
+			{
+				_templateFiles.AddRange(Directory.GetFiles(userProfile, "*" + _defaultExt, SearchOption.AllDirectories));
+			}
+
+			var assembly = Assembly.GetExecutingAssembly().Location;
+			_folder = Path.Combine(Path.GetDirectoryName(assembly), "Templates");
+			_templateFiles.AddRange(Directory.GetFiles(_folder, "*" + _defaultExt, SearchOption.AllDirectories));
+
+
+
+
 			var extension = Path.GetExtension(file).ToLowerInvariant();
 			var name = Path.GetFileName(file);
 			var safeName = name.StartsWith(".") ? name : Path.GetFileNameWithoutExtension(file);

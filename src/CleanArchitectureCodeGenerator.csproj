@@ -58,6 +58,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CopyVsixExtensionFiles>False</CopyVsixExtensionFiles>
+    <CreateVsixContainer>True</CreateVsixContainer>
+    <CopyVsixExtensionLocation>C:\Users\Chathurangasandun\Source\Repos\csandun\CleanArchitectureCodeGenerator-csandun\src\Templates\</CopyVsixExtensionLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -121,10 +124,19 @@
     <Content Include="Templates\Commands\AcceptChanges\.validator.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Templates\Queries\Pagination\.handler.cs.txt" />
-    <Resource Include="Templates\Commands\Create\.handler.cs.txt" />
-    <Resource Include="Templates\Commands\Delete\.handler.cs.txt" />
-    <Resource Include="Templates\Commands\Update\.handler.cs.txt" />
+    <Content Include="Templates\Queries\Pagination\.handler.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Commands\Create\.handler.cs.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Commands\Delete\.handler.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Templates\Commands\Update\.handler.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Templates\Events\.deletedevent.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -146,9 +158,13 @@
     <Content Include="Templates\Queries\Export\.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Templates\Queries\GetAll\.handler.cs.txt" />
+    <Content Include="Templates\Queries\GetAll\.handler.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Resource Include="Templates\Queries\GetById\.cs.txt" />
-    <Resource Include="Templates\Queries\GetById\.handler.cs.txt" />
+    <Content Include="Templates\Queries\GetById\.handler.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Templates\Queries\Pagination\.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
