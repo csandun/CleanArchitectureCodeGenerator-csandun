@@ -1,56 +1,12 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿using Camms.Risk.Application.Dto.Common;
+using MediatR;
 
-using {selectns}.{nameofPlural}.DTOs;
-
-namespace {namespace};
-
-    public class Delete{itemname}Command: IRequest<Result>
+namespace {namespace}
+{
+    public class Delete{itemname}Command : IRequest<CreatedResponseDto>
     {
-      public int Id {  get; set; }
-    }
-    public class DeleteChecked{nameofPlural}Command : IRequest<Result>
-    {
-      public int[] Id {  get; set; }
-    }
+        // TODO: Put your {itemname}'s properties here.
 
-    public class Delete{itemname}CommandHandler : 
-                 IRequestHandler<Delete{itemname}Command, Result>,
-                 IRequestHandler<DeleteChecked{nameofPlural}Command, Result>
-    {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Delete{itemname}CommandHandler> _localizer;
-        public Delete{itemname}CommandHandler(
-            IApplicationDbContext context,
-            IStringLocalizer<Delete{itemname}CommandHandler> localizer,
-             IMapper mapper
-            )
-        {
-            _context = context;
-            _localizer = localizer;
-            _mapper = mapper;
-        }
-        public async Task<Result> Handle(Delete{itemname}Command request, CancellationToken cancellationToken)
-        {
-           //TODO:Implementing Delete{itemname}CommandHandler method 
-           var item = await _context.{nameofPlural}.FindAsync(new object[] { request.Id }, cancellationToken);
-           _ = item ?? throw new NotFoundException($"{itemname} {request.Id} Not Found.");
-           _context.{nameofPlural}.Remove(item);
-           await _context.SaveChangesAsync(cancellationToken);
-           return Result.Success();
-        }
-
-        public async Task<Result> Handle(DeleteChecked{nameofPlural}Command request, CancellationToken cancellationToken)
-        {
-           //TODO:Implementing DeleteChecked{nameofPlural}CommandHandler method 
-           var items = await _context.{nameofPlural}.Where(x => request.Id.Contains(x.Id)).ToListAsync(cancellationToken);
-            foreach (var item in items)
-            {
-                _context.{nameofPlural}.Remove(item);
-            }
-            await _context.SaveChangesAsync(cancellationToken);
-            return Result.Success();
-        }
+        public int Id { get; set; } 
     }
-
+}

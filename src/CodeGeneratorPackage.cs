@@ -116,43 +116,14 @@ namespace CleanArchitecture.CodeGenerator
 			{
 				try
 				{
-					
-
-
-					//var list = new List<string>()
-					//{
-					//	$"{name}/Commands/AcceptChanges/AcceptChanges{name}Command.cs",
-					//	//$"{name}/Commands/AcceptChanges/AcceptChanges{name}CommandValidator.cs",
-					//	//$"{name}/Commands/AddEdit/AddEdit{name}Command.cs",
-					//	//$"{name}/Commands/AddEdit/AddEdit{name}CommandValidator.cs",
-					//	//$"{name}/Commands/Create/Create{name}Command.cs",
-					//	//$"{name}/Commands/Create/Create{name}CommandValidator.cs",
-					//	//$"{name}/Commands/Delete/Delete{name}Command.cs",
-					//	//$"{name}/Commands/Delete/Delete{name}CommandValidator.cs",
-					//	//$"{name}/Commands/Update/Update{name}Command.cs",
-					//	//$"{name}/Commands/Update/Update{name}CommandValidator.cs",
-					//	//$"{name}/Commands/Import/Import{nameofPlural}Command.cs",
-					//	//$"{name}/Commands/Import/Import{nameofPlural}CommandValidator.cs",
-					//	//$"{name}/Caching/{name}CacheKey.cs",
-					//	//$"{name}/DTOs/{name}Dto.cs",
-					//	//$"{name}/EventHandlers/{name}CreatedEventHandler.cs",
-					//	//$"{name}/EventHandlers/{name}UpdatedEventHandler.cs",
-					//	//$"{name}/EventHandlers/{name}DeletedEventHandler.cs",
-					//	//$"{name}/Queries/Export/Export{nameofPlural}Query.cs",
-					//	//$"{name}/Queries/GetAll/GetAll{nameofPlural}Query.cs",
-					//	//$"{name}/Queries/Pagination/{nameofPlural}PaginationQuery.cs",
-					//};
-
-
-
 					var name = Path.GetFileNameWithoutExtension(inputname);
 					var nameofPlural = ProjectHelpers.Pluralize(name);
-
+					var templates = new TemplateModelValues().Templates;
+					
 					foreach (var item in actions)
 					{
-
-						var templates = TemplateModelExtensions.Templates.Where(o => o.Action == item);
-                        foreach (var template in templates)
+						var selectedTemplates = templates.Where(o => o.Action == item);
+                        foreach (var template in selectedTemplates)
                         {
 							// replace template file names
 							template.FilePath = template.FilePath.Replace("$NAME", name).Replace("$NAME_OF_PLURAL", nameofPlural);
@@ -160,26 +131,7 @@ namespace CleanArchitecture.CodeGenerator
 							// add item async
 							AddItemAsync(template.FilePath, name, target, item, template).Forget();
 						}
-
-
-						//var fileName = "";
-						//switch (item)
-						//{
-						//	case "Create": fileName = $"{name}/Create{name}CommandHandler.cs"; break;
-						//	case "CreateValidator": fileName = $"{name}/Create{name}CommandValidator.cs"; break;
-						//	case "Update": fileName = $"{name}/Update{name}CommandHandler.cs"; break;
-						//	case "UpdateValidator": fileName = $"{name}/Update{name}CommandValidator.cs"; break;
-						//	case "Delete": fileName = $"{name}/Delete{name}CommandHandler.cs"; break;							
-						//	case "GetAll": fileName = $"{name}/GetAll{nameofPlural}QueryHandler.cs"; break;
-						//	case "GetById": fileName = $"{name}/Get{name}ByIdQueryHandler.cs"; break;
-						//	case "GetAllWithPagination": fileName = $"{name}/Get{nameofPlural}QueryHandler.cs"; break;
-						//	default: throw new Exception("Invalid action!.");
-						//}
-
-						//AddItemAsync(fileName, name, target, item).Forget();
 					}
-
-
 				}
 				catch (Exception ex) when (!ErrorHandler.IsCriticalException(ex))
 				{

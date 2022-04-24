@@ -1,40 +1,16 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿using Camms.Risk.Application.Dto.Common;
+using MediatR;
 
-using {selectns}.{nameofPlural}.DTOs;
-
-namespace {namespace};
-
-    public class Update{itemname}Command: {itemname}Dto,IRequest<Result>, IMapFrom<{itemname}>
+namespace {namespace}
+{
+    public class Update{itemname}Command : IRequest<CreatedResponseDto>
     {
-        
-    }
+        // TODO: Put your {itemname}'s properties here.
 
-    public class Update{itemname}CommandHandler : IRequestHandler<Update{itemname}Command, Result>
-    {
-        private readonly IApplicationDbContext _context;
-        private readonly IMapper _mapper;
-        private readonly IStringLocalizer<Update{itemname}CommandHandler> _localizer;
-        public Update{itemname}CommandHandler(
-            IApplicationDbContext context,
-            IStringLocalizer<Update{itemname}CommandHandler> localizer,
-             IMapper mapper
-            )
-        {
-            _context = context;
-            _localizer = localizer;
-            _mapper = mapper;
-        }
-        public async Task<Result> Handle(Update{itemname}Command request, CancellationToken cancellationToken)
-        {
-           //TODO:Implementing Update{itemname}CommandHandler method 
-           var item =await _context.{nameofPlural}.FindAsync( new object[] { request.Id }, cancellationToken);
-           if (item != null)
-           {
-                item = _mapper.Map(request, item);
-                await _context.SaveChangesAsync(cancellationToken);
-           }
-           return Result.Success();
-        }
-    }
+        public int Id { get; set; } 
+    }   
+}
+
+
+
 

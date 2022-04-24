@@ -17,7 +17,7 @@
         <ListBox x:Name="listExtraSkills" ItemsSource="{Binding CheckList}"   Margin="12,118,10,10" av:ItemsSource="{av:SampleData ItemCount=5}" SelectionChanged="listExtraSkills_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <CheckBox x:Name="chkitems" Content="{Binding TheText}" IsChecked="{Binding IsSelected}"/>
+                    <CheckBox x:Name="chkitems" Content="{Binding TheText}" IsChecked="{Binding IsSelected}" IsEnabled="{Binding IsReleased}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

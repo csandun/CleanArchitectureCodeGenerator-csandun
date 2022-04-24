@@ -11,6 +11,7 @@ namespace CleanArchitecture.CodeGenerator
 	{
 		public string TheText { get; set; }
 		public bool IsSelected { get; set; }
+		public bool IsReleased { get; set; }
 	}
 
 
@@ -47,14 +48,13 @@ namespace CleanArchitecture.CodeGenerator
 		List<CheckListItem> GenerateTestData()
 		{
 			List<CheckListItem> checkListItems = new List<CheckListItem>();
-			checkListItems.Add(new CheckListItem { TheText = "Create", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "CreateValidator", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "Update", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "UpdateValidator", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "Delete", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false });
-			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "Create", IsSelected = false, IsReleased = true });			
+			checkListItems.Add(new CheckListItem { TheText = "Update", IsSelected = false, IsReleased = true });			
+			checkListItems.Add(new CheckListItem { TheText = "Delete", IsSelected = false, IsReleased = true });
+			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false, IsReleased = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false, IsReleased = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false, IsReleased = false });
+			checkListItems.Add(new CheckListItem { TheText = "DTO", IsSelected = false, IsReleased = false });
 			return checkListItems;
 		}
 

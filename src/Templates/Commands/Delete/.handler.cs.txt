@@ -6,16 +6,16 @@ using Microsoft.Extensions.Logging;
 
 namespace {namespace}
 {
-    public class Create{itemname}CommandHandler : IRequestHandler<Create{itemname}Command, CreatedResponseDto>
+    public class Delete{itemname}CommandHandler : IRequestHandler<Delete{itemname}Command, CreatedResponseDto>
     {
         private readonly IRiskUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly ILogger<Create{itemname}CommandHandler> _logger;
+        private readonly ILogger<Delete{itemname}CommandHandler> _logger;
 
-        public Create{itemname}CommandHandler(
+        public Delete{itemname}CommandHandler(
             IRiskUnitOfWork unitOfWork, 
             IMapper mapper, 
-            ILogger<Create{itemname}CommandHandler> logger
+            ILogger<Delete{itemname}CommandHandler> logger
             )
         {
             _unitOfWork = unitOfWork;
@@ -23,15 +23,12 @@ namespace {namespace}
             _logger = logger;
         }
 
-        public async Task<CreatedResponseDto> Handle(Create{itemname}Command command, CancellationToken cancellationToken)
+        public async Task<CreatedResponseDto> Handle(Delete{itemname}Command command, CancellationToken cancellationToken)
         {
-           // TODO:Implementing Create{itemname}CommandHandler method further more. 
-
-           var entity = _mapper.Map<Create{itemname}Command, Camms.Risk.Domain.Entity.{itemname}>(command);
-           entity.IsDeleted = false;
-           var insertedEntity = await _unitOfWork.{itemname}Repository.InsertAsync(entity);
-           await _unitOfWork.SaveChangesAsync();           
-           return  new CreatedResponseDto() { Id = insertedEntity.Id };
+           // TODO:Implementing Delete{itemname}CommandHandler method further more. 
+           
+           return  new CreatedResponseDto() { Id = command.Id};
         }
     }
 }
+
