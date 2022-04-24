@@ -48,7 +48,9 @@ namespace CleanArchitecture.CodeGenerator
 		{
 			List<CheckListItem> checkListItems = new List<CheckListItem>();
 			checkListItems.Add(new CheckListItem { TheText = "Create", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "CreateValidator", IsSelected = false });
 			checkListItems.Add(new CheckListItem { TheText = "Update", IsSelected = false });
+			checkListItems.Add(new CheckListItem { TheText = "UpdateValidator", IsSelected = false });
 			checkListItems.Add(new CheckListItem { TheText = "Delete", IsSelected = false });
 			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false });
 			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false });

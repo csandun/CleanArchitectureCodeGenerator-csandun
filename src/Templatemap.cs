@@ -73,7 +73,6 @@ namespace CleanArchitecture.CodeGenerator
 				case "Delete":
 					mockPath = @"Templates\Commands\Delete";
 					break;
-
 			}
 
 			templateFile = list.ToList().Find(o => o.Contains(mockPath));

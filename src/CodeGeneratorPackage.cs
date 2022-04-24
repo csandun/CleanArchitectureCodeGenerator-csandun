@@ -268,8 +268,6 @@ namespace CleanArchitecture.CodeGenerator
 					project.AddFileToProject(file);
 				}
 
-				//target.Directory = target.Directory.Replace("Commands\\AcceptChanges\\", "");
-				//name = name.Replace("Commands/AcceptChanges/", "");
 				file = new FileInfo(Path.Combine(target.Directory, name));
 
 

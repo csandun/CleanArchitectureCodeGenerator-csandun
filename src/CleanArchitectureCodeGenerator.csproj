@@ -92,6 +92,7 @@
       <DependentUpon>FileNameDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="CodeGeneratorPackage.cs" />
+    <Compile Include="Models\TemplateModel.cs" />
     <Compile Include="Services\GenerationService.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\ProjectHelpers.cs" />
