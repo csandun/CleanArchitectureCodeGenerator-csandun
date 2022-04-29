@@ -126,7 +126,7 @@ namespace CleanArchitecture.CodeGenerator
                         foreach (var template in selectedTemplates)
                         {
 							// replace template file names
-							template.FilePath = template.FilePath.Replace("$NAME", name).Replace("$NAME_OF_PLURAL", nameofPlural);
+							template.FilePath = template.FilePath.Replace("$NAME_OF_PLURAL", nameofPlural).Replace("$NAME", name);
 
 							// add item async
 							AddItemAsync(template.FilePath, name, target, item, template).Forget();

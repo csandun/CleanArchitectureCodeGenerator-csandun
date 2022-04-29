@@ -90,7 +90,8 @@ namespace CleanArchitecture.CodeGenerator.Models
 						Action = "GetAll",
 						FilePath = "$NAME/GetAll$NAME_OF_PLURALQueryHandler.cs",
 						TemplatePath = @"Templates\Queries\GetAll\.handler.cs.txt",
-						Category = "Query"
+						Category = "Query",
+
 					},
 					new TemplateModel(){
 						Id = "GetAllQuery",
@@ -119,14 +120,14 @@ namespace CleanArchitecture.CodeGenerator.Models
 					// get with pagination
 					new TemplateModel(){
 						Id = "GetAllWithPaginationHandler",
-						Action = "GetById",
+						Action = "GetAllWithPagination",
 						FilePath = "$NAME/Get$NAME_OF_PLURALQueryHandler.cs",
 						TemplatePath = @"Templates\Queries\Pagination\.handler.cs.txt",
 						Category = "Query"
 					},
 					new TemplateModel(){
 						Id = "GetAllWithPaginationQuery",
-						Action = "GetAll",
+						Action = "GetAllWithPagination",
 						FilePath = "$NAME/Get$NAME_OF_PLURALQuery.cs",
 						TemplatePath = @"Templates\Queries\Pagination\.cs.txt",
 						Category = "Query"

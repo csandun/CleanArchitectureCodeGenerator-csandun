@@ -51,9 +51,9 @@ namespace CleanArchitecture.CodeGenerator
 			checkListItems.Add(new CheckListItem { TheText = "Create", IsSelected = false, IsReleased = true });			
 			checkListItems.Add(new CheckListItem { TheText = "Update", IsSelected = false, IsReleased = true });			
 			checkListItems.Add(new CheckListItem { TheText = "Delete", IsSelected = false, IsReleased = true });
-			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false, IsReleased = false });
-			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false, IsReleased = false });
-			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false, IsReleased = false });
+			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false, IsReleased = true });
+			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false, IsReleased = true});
+			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false, IsReleased = true});
 			checkListItems.Add(new CheckListItem { TheText = "DTO", IsSelected = false, IsReleased = false });
 			return checkListItems;
 		}
