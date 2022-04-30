@@ -3,7 +3,7 @@ using MediatR;
 
 namespace {namespace}
 {
-    public class Delete{itemname}Command : IRequest<CreatedResponseDto>
+    public class Delete{itemname}Command : IRequest<DeletedResponseDto>
     {
         // TODO: Put your {itemname}'s properties here.
 

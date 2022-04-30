@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Camms.Risk.Application.Query.{itemname}
 {
-    public record class GetAll{nameofPlural}Query: IRequest<List<{itemname}Dto>>
+    public class GetAll{nameofPlural}Query: IRequest<List<{itemname}Dto>>
     {
         
     }

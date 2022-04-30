@@ -3,7 +3,7 @@ using MediatR;
 
 namespace {namespace}
 {
-    public class Update{itemname}Command : IRequest<CreatedResponseDto>
+    public class Update{itemname}Command : IRequest<UpdatetdResponseDto>
     {
         // TODO: Put your {itemname}'s properties here.
 

@@ -31,7 +31,7 @@ namespace {namespace}
            entity.IsDeleted = false;
            var insertedEntity = await _unitOfWork.{itemname}Repository.InsertAsync(entity);
            await _unitOfWork.SaveChangesAsync();           
-           return  new CreatedResponseDto() { Id = insertedEntity.Id };
+           return  new CreatedResponseDto(insertedEntity.Id);
         }
     }
 }

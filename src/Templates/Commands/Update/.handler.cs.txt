@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace {namespace}
 {
-    public class Update{itemname}CommandHandler : IRequestHandler<Update{itemname}Command, CreatedResponseDto>
+    public class Update{itemname}CommandHandler : IRequestHandler<Update{itemname}Command, UpdatetdResponseDto>
     {
         private readonly IRiskUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace {namespace}
             _logger = logger;
         }
 
-        public async Task<CreatedResponseDto> Handle(Update{itemname}Command command, CancellationToken cancellationToken)
+        public async Task<UpdatetdResponseDto> Handle(Update{itemname}Command command, CancellationToken cancellationToken)
         {
            // TODO: Update logic goes here.  Example - Refer `UpdateRiskTypeGroupingCommandHandler.cs`
 
@@ -35,7 +35,7 @@ namespace {namespace}
                 .ForMember(o => o.Description, p => p.MapFrom(s => s.Description));
            */
            
-           return  new CreatedResponseDto() { Id = command.Id};
+           return  new UpdatetdResponseDto(command.Id);
         }
     }
 }
