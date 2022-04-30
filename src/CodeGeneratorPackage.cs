@@ -41,6 +41,8 @@ namespace CleanArchitecture.CodeGenerator
 
 		private const string CommandProjectName = "Camms.Risk.Application.Command";
 		private const string QueryProjectName = "Camms.Risk.Application.Query";
+		private const string DtoProjectName = "Camms.Risk.Application.Dto";
+		private const string EntityProjectName = "Camms.Risk.Domain.Entity";
 
 
 
@@ -80,7 +82,7 @@ namespace CleanArchitecture.CodeGenerator
 			}
 
 
-			NewItemTarget domain = NewItemTarget.Create(_dte, "Camms.Risk.Domain.Entity");
+			NewItemTarget domain = NewItemTarget.Create(_dte, EntityProjectName);
 			//NewItemTarget domain= NewItemTarget.Create(_dte, "Domain");
 			//domain.Directory = @"C:\Developments\CAMMS\Camms.Risk\Camms.Risk\Camms.Risk.Domain.Entity";
 			// get all domain classes from domain project
@@ -125,6 +127,11 @@ namespace CleanArchitecture.CodeGenerator
 						var selectedTemplates = templates.Where(o => o.Action == item);
                         foreach (var template in selectedTemplates)
                         {
+							if (item == "DTO")
+							{
+								target = NewItemTarget.Create(_dte, DtoProjectName);
+							}
+
 							// replace template file names
 							template.FilePath = template.FilePath.Replace("$NAME_OF_PLURAL", nameofPlural).Replace("$NAME", name);
 

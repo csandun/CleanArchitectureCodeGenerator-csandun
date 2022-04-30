@@ -25,7 +25,7 @@ namespace {namespace}
 
         public async Task<CreatedResponseDto> Handle(Create{itemname}Command command, CancellationToken cancellationToken)
         {
-           // TODO:Implementing Create{itemname}CommandHandler method further more. 
+           // TODO: Create logic goes here.
 
            var entity = _mapper.Map<Create{itemname}Command, Camms.Risk.Domain.Entity.{itemname}>(command);
            entity.IsDeleted = false;

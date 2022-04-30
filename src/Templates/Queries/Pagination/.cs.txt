@@ -4,7 +4,7 @@ using MediatR;
 
 namespace {namespace}
 {
-    public  class Get{nameofPlural}Query: DataSourceRequest, IRequest<DataSourceResult<{itemname}Dto>>
+    public  class Get{nameofPlural}WithPaginationQuery: DataSourceRequest, IRequest<DataSourceResult<{itemname}Dto>>
     {
     }
 }

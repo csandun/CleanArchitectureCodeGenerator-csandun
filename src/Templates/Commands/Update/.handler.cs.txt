@@ -25,7 +25,15 @@ namespace {namespace}
 
         public async Task<CreatedResponseDto> Handle(Update{itemname}Command command, CancellationToken cancellationToken)
         {
-           // TODO:Implementing Update{itemname}CommandHandler method further more. 
+           // TODO: Update logic goes here.  Example - Refer `UpdateRiskTypeGroupingCommandHandler.cs`
+
+           // TODO: Register update command class with entity like this in CommandMappingProfile class
+           /*    
+            CreateMap<UpdateRiskTypeGroupingCommand, ObjectTypeGrouping>()
+                .ForMember(o => o.Status, p => p.MapFrom(s => s.Status))
+                .ForMember(o => o.GroupName, p => p.MapFrom(s => s.GroupName))
+                .ForMember(o => o.Description, p => p.MapFrom(s => s.Description));
+           */
            
            return  new CreatedResponseDto() { Id = command.Id};
         }

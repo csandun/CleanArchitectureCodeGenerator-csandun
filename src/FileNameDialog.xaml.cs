@@ -54,7 +54,7 @@ namespace CleanArchitecture.CodeGenerator
 			checkListItems.Add(new CheckListItem { TheText = "GetAll", IsSelected = false, IsReleased = true });
 			checkListItems.Add(new CheckListItem { TheText = "GetById", IsSelected = false, IsReleased = true});
 			checkListItems.Add(new CheckListItem { TheText = "GetAllWithPagination", IsSelected = false, IsReleased = true});
-			checkListItems.Add(new CheckListItem { TheText = "DTO", IsSelected = false, IsReleased = false });
+			checkListItems.Add(new CheckListItem { TheText = "DTO", IsSelected = false, IsReleased = true });
 			return checkListItems;
 		}
 

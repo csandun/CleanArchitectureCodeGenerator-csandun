@@ -25,7 +25,9 @@ namespace {namespace}
 
         public async Task<CreatedResponseDto> Handle(Delete{itemname}Command command, CancellationToken cancellationToken)
         {
-           // TODO:Implementing Delete{itemname}CommandHandler method further more. 
+           // TODO: Delete logic goes here. 
+
+           // Example - Refer `DeleteRiskTypeGroupingCommandHandler.cs`
            
            return  new CreatedResponseDto() { Id = command.Id};
         }

@@ -121,16 +121,25 @@ namespace CleanArchitecture.CodeGenerator.Models
 					new TemplateModel(){
 						Id = "GetAllWithPaginationHandler",
 						Action = "GetAllWithPagination",
-						FilePath = "$NAME/Get$NAME_OF_PLURALQueryHandler.cs",
+						FilePath = "$NAME/Get$NAME_OF_PLURALWithPaginationQueryHandler.cs",
 						TemplatePath = @"Templates\Queries\Pagination\.handler.cs.txt",
 						Category = "Query"
 					},
 					new TemplateModel(){
 						Id = "GetAllWithPaginationQuery",
 						Action = "GetAllWithPagination",
-						FilePath = "$NAME/Get$NAME_OF_PLURALQuery.cs",
+						FilePath = "$NAME/Get$NAME_OF_PLURALWithPaginationQuery.cs",
 						TemplatePath = @"Templates\Queries\Pagination\.cs.txt",
 						Category = "Query"
+					},
+
+					// dto
+					new TemplateModel(){
+						Id = "DTO",
+						Action = "DTO",
+						FilePath = "$NAME/$NAMEDto.cs",
+						TemplatePath = @"Templates\DTOs\.dto.cs.txt",
+						Category = "DTO"
 					},
 
 				};

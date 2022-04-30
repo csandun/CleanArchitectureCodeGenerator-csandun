@@ -4,17 +4,23 @@
     <Extern href="stdidcmd.h"/>
     <Extern href="vsshlids.h"/>
 
+    
+    
     <Commands package="guidCodeGeneratorPkg">
         <Buttons>
             <Button guid="guidCodeGeneratorCmdSet" id="cmdidMyCommand" priority="0x0200" type="Button">
                 <Parent guid="guidSHLMainMenu" id="IDG_VS_CTXT_PROJECT_ADD_ITEMS"/>
+                <Icon guid="context-icon" id="context-icon1" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <CommandName>AddFeaturesClassFile</CommandName>
-                    <ButtonText>New Command/Query usecase...</ButtonText>
+                    <ButtonText>New Command/Query files</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
+        <Bitmaps>
+            <Bitmap guid="context-icon" href="Resources\context-icon.png" usedList="context-icon1"  />
+        </Bitmaps>
     </Commands>
 
     <CommandPlacements>
@@ -41,6 +47,14 @@
         <GuidSymbol name="guidCodeGeneratorCmdSet" value="{4c7a4f97-2988-45ec-af7c-8984fc72c5e1}">
             <IDSymbol name="cmdidMyCommand" value="0x0100" />
         </GuidSymbol>
+
+        <GuidSymbol name="context-icon" value="{A4C44351-184A-4E6A-81D0-A54B9823547A}">
+            <IDSymbol name="context-icon1" value="1" />
+        </GuidSymbol>
+        
+        
     </Symbols>
+
+    
 
 </CommandTable>

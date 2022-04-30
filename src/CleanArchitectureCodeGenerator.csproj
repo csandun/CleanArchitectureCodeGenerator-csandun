@@ -115,6 +115,8 @@
       <DependentUpon>source.extension.vsixmanifest</DependentUpon>
     </Compile>
     <Compile Include="TemplateMap.cs" />
+    <Resource Include="Resources\context-icon.png" />
+    <Resource Include="context-icon.png" />
     <Content Include="Templates\Caching\.cachekey.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
@@ -161,7 +163,9 @@
     <Content Include="Templates\Queries\GetAll\.handler.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Resource Include="Templates\Queries\GetById\.cs.txt" />
+    <Content Include="Templates\Queries\GetById\.cs.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Templates\Queries\GetById\.handler.cs.txt">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
