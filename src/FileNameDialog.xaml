@@ -13,7 +13,7 @@
 
         <Label Grid.Row="0" Grid.Column="0" x:Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="26" FontWeight="SemiBold"  Margin="10,31,0,0"/>
         <ComboBox Grid.Row="0" IsEditable="True" Text="Select a entity name" x:Name="selectName" VerticalContentAlignment="Center"  Height="23"  VerticalAlignment="Top" MinWidth="160" Margin="10,61,10,0" SelectionChanged="selectName_SelectionChanged"/>
-        <Button Grid.Row="0" IsEnabled="False" Content="Create code" HorizontalAlignment="Left" Margin="305,10,0,0" VerticalAlignment="Top" Width="85" Height="23" IsDefault="True" x:Name="btnCreate" Click="Button_Click" />
+        <Button Grid.Row="0" IsEnabled="False" Content="Create code" HorizontalAlignment="Left" Margin="298,15,0,0" VerticalAlignment="Top" Width="85" Height="23" IsDefault="True" x:Name="btnCreate" Click="Button_Click" />
         <ListBox x:Name="listExtraSkills" ItemsSource="{Binding CheckList}"   Margin="12,118,10,10" av:ItemsSource="{av:SampleData ItemCount=5}" SelectionChanged="listExtraSkills_SelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
