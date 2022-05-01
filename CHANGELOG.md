@@ -1,8 +1,7 @@
 # Road map
 
-- [ ] Nothing yet...
-- [x] Fix for paths above project folder (#37)
-- [x] Fix for multi-project scenarios (#35)
+- [ ] Add handler and dto for custom usecase.
+- [ ] Update Automapper profilers and repository files for newly generated entities.
 
 Features that have a checkmark are complete and available for
 download in the
@@ -13,52 +12,16 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
-## 3.5
+## 0.3
 
-**2016-07-27**
+**2022-05-01**
 
-- [x] Support for solution 
-- [x] Fixed UTF8 BOM issue
+- [x] Bug fixers
+- [x] Update license and readme
 
-## 3.4
+## 0.2
 
-**2016-06-10**
+**2022-04-30**
 
-- [x] Re-implemented the error logger
-- [x] Fixed end-of-line
-- [x] No longer add new file to SSDT projects. Requires manual include
+- [x] Support for GetAll, Pagination and GetById 
 
-## 3.3
-
-**2016-05-02**
-
-- [x] "VS15" support
-
-## 3.2
-
-**2016-04-05**
-
-- [x] Fixed crash when command is not available
-- [x] Added culture to AssemblyInfo
-- [x] Using the Shell utils to open file
-
-## 3.1
-
-**2016-03-14**
-
-- [x] Added changelog/roadmap
-- [x] Textbox too small with long folder name (#20)
-- [x] C#/VB templates to include folder names (#21)
-
-## 3.0
-
-**2016-03-11**
-
-- [x] New templating engine
-- [x] Templates for C#, VB, HTML and JSON files.
-- [x] File name match template support for:
-  - gulpfile.js
-  - gruntfile.js
-  - bower.json
-  - package.json
-  
