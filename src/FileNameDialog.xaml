@@ -4,8 +4,7 @@
         xmlns:local="clr-namespace:CleanArchitecture.CodeGenerator"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="CleanArchitecture.CodeGenerator.FileNameDialog"
         Title="Risk project CQRS file generator" Height="400" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" SizeToContent="Width"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" Icon="/CleanArchitectureCodeGenerator;component/context-icon.png"
-        >
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
     <Grid>
 

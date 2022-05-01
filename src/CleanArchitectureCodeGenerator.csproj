@@ -47,7 +47,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CleanArchitecture.CodeGenerator</RootNamespace>
-    <AssemblyName>CleanArchitectureCodeGenerator</AssemblyName>
+    <AssemblyName>RiskProjectCodeGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

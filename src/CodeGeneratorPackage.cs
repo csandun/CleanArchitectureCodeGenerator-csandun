@@ -79,6 +79,7 @@ namespace CleanArchitecture.CodeGenerator
 							Vsix.Name,
 							MessageBoxButton.OK,
 							MessageBoxImage.Error);
+				return;
 			}
 
 

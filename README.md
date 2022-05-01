@@ -1,16 +1,11 @@
-# Code Generator for Clean Architecture 
-
-[![Build status](https://ci.appveyor.com/api/projects/status/252jpryc38qah37x?svg=true)](https://ci.appveyor.com/project/madskristensen/addanyfile)
+# Code Generator for Risk Project 
 
 Download the extension at the
-[VS Gallery](https://marketplace.visualstudio.com/items?itemName=SmartCodeMVC5Enginever3898.247365)
+[VS Gallery]https://marketplace.visualstudio.com/items?itemName=CSandun.riskcqrs)
 
-### How to start
-[![How to](art/nuget.png)](https://www.youtube.com/watch?v=Hp6cjdfgMT8)
+### Introduction
 
--------------------------------------------------
-
-A Visual Studio extension for easily create application features code  to clean architecture project. Simply hit Shift+F2 to create an empty file in the
+A Visual Studio extension for easily create application features code  to CQRS based clean architecture  project files for usecases. Simply hit Shift+F2 to create an empty file in the
 selected folder or in the same folder as the selected file.
 
 See the [changelog](CHANGELOG.md) for updates and roadmap.
@@ -18,23 +13,13 @@ See the [changelog](CHANGELOG.md) for updates and roadmap.
 ### Features
 
 - Easily create following application features code
-- {nameofPlural}/Commands/AddEdit/AddEdit{name}Command.cs
-- {nameofPlural}/Commands/AddEdit/AddEdit{name}CommandValidator.cs
-- {nameofPlural}/Commands/Create/Create{name}Command.cs
-- {nameofPlural}/Commands/Create/Create{name}CommandValidator.cs
-- {nameofPlural}/Commands/Delete/Delete{name}Command.cs
-- {nameofPlural}/Commands/Delete/Delete{name}CommandValidator.cs
-- {nameofPlural}/Commands/Update/Update{name}Command.cs
-- {nameofPlural}/Commands/Update/Update{name}CommandValidator.cs
-- {nameofPlural}/Commands/Import/Import{name}Command.cs
-- {nameofPlural}/Commands/Import/Import{name}CommandValidator.cs
-- {nameofPlural}/DTOs/{name}Dto.cs
-- {nameofPlural}/EventHandlers/{name}CreatedEventHandler.cs
-- {nameofPlural}/EventHandlers/{name}UpdatedEventHandler.cs
-- {nameofPlural}/EventHandlers/{name}DeletedEventHandler.cs
-- {nameofPlural}/Queries/Export/Export{nameofPlural}Query.cs
-- {nameofPlural}/Queries/GetAll/GetAll{nameofPlural}Query.cs
-- {nameofPlural}/Queries/Pagination/{nameofPlural}PaginationQuery.cs
+    - Create command
+    - Update command
+    - Delete command
+    - Get all query
+    - Get all with pagination
+    - Get by id
+    - Generate Dto
 
 ### CleanArchitecture for Razor Page project
 The current project only applies to the following development projects.

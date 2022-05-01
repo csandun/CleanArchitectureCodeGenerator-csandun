@@ -74,7 +74,7 @@ namespace CleanArchitecture.CodeGenerator
 			};
 				Loaded += (s, e) =>
 			{
-				Icon = BitmapFrame.Create(new Uri("pack://application:,,,/CleanArchitectureCodeGenerator;component/Resources/icon.png", UriKind.RelativeOrAbsolute));
+				//Icon = BitmapFrame.Create(new Uri("pack://application:,,,/CleanArchitectureCodeGenerator;component/Resources/icon.png", UriKind.RelativeOrAbsolute));
 				Title = Vsix.Name;
 
 
