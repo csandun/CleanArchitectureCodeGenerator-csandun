@@ -49,6 +49,10 @@ namespace CleanArchitecture.CodeGenerator.Models
 
 					foreach (CodeElement member in cn.Members)
 					{
+
+                        Console.WriteLine(member.Name);
+
+
 						var a = member.Name;
 						if (ShouldProcess(member))
 						{
@@ -103,7 +107,7 @@ namespace CleanArchitecture.CodeGenerator.Models
 
 				}
 				catch { /* Silently continue. */ }
-				var baseClasses = new string[] { "AuditableSoftDeleteEntity", "AuditableEntity", "IAuditTrial", "IEntity", "ISoftDelete" };
+				var baseClasses = new string[] { "AuditableSoftDeleteEntity", "AuditableEntity", "IAuditTrial", "IEntity", "ISoftDelete", "ICreatedEntity", "IAuditableEntity"  };
 				//if (baseClass != null && baseClasses.Contains(GetClassName(baseClass)))
 				//{
 				ProcessClass(cc, baseClass, list, underProcess);
@@ -188,7 +192,7 @@ namespace CleanArchitecture.CodeGenerator.Models
 			var isImplementedFromIEntity = false;
 			foreach (CodeInterface item in cc.ImplementedInterfaces)
 			{
-				if (item.Name == "IEntity")
+				if (item.Name == "IAuditableEntity" || item.Name == "IEntity" || item.Name == "ICreatedEntity")
 				{
 					isImplementedFromIEntity = true;
 				}

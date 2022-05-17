@@ -1,10 +1,10 @@
-﻿using Camms.Risk.Application.Common.GridManupulation;
-using Camms.Risk.Application.Dto.{itemname};
+﻿using Camms.Risk.Application.Dto.{itemname};
 using MediatR;
+using  Camms.Risk.Application.Common.KendoGridExtensions;
 
 namespace {namespace}
 {
-    public  class Get{nameofPlural}WithPaginationQuery: DataSourceRequest, IRequest<DataSourceResult<{itemname}Dto>>
+    public  class Get{nameofPlural}WithPaginationQuery: FilterContainer, IRequest<DataSourceResult<{itemname}Dto>>
     {
     }
 }

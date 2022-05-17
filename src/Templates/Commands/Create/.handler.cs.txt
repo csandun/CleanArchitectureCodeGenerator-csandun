@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Camms.Risk.Application.Dto.Common;
-using Camms.Risk.Application.Repository;
+using Camms.Risk.Application.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 

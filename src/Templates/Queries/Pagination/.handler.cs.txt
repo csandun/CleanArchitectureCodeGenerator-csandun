@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Camms.Risk.Application.Common.GridManupulation;
 using Camms.Risk.Application.Dto.{itemname};
-using Camms.Risk.Application.Repository;
+using Camms.Risk.Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
