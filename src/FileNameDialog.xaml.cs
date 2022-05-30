@@ -116,14 +116,6 @@ namespace CleanArchitecture.CodeGenerator
 			Close();
 		}
 
-		private void listExtraSkills_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{
-
-		}
-
-		private void selectName_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-		{
-
-		}
+		
 	}
 }

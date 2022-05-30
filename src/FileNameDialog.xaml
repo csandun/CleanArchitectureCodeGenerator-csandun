@@ -3,24 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:CleanArchitecture.CodeGenerator"
         xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="CleanArchitecture.CodeGenerator.FileNameDialog"
-        Title="Risk project CQRS file generator" Height="400" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" SizeToContent="Width"
+        Title="Risk project CQRS file generator" Height="368" Width="400" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen" SizeToContent="Width"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
-    <Grid>
-
-
-
+    <Grid Margin="0,0,0,69">
         <Label Grid.Row="0" Grid.Column="0" x:Name="lblFolder" Content="Folder name:" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="26" FontWeight="SemiBold"  Margin="10,31,0,0"/>
-        <ComboBox Grid.Row="0" IsEditable="True" Text="Select a entity name" x:Name="selectName" VerticalContentAlignment="Center"  Height="23"  VerticalAlignment="Top" MinWidth="160" Margin="10,61,10,0" SelectionChanged="selectName_SelectionChanged"/>
+        <ComboBox Grid.Row="0" IsEditable="True" Text="Select a entity name" x:Name="selectName" VerticalContentAlignment="Center"  Height="23"  VerticalAlignment="Top" MinWidth="160" Margin="10,61,10,0" />
         <Button Grid.Row="0" IsEnabled="False" Content="Create code" HorizontalAlignment="Left" Margin="298,15,0,0" VerticalAlignment="Top" Width="85" Height="23" IsDefault="True" x:Name="btnCreate" Click="Button_Click" />
-        <ListBox x:Name="listExtraSkills" ItemsSource="{Binding CheckList}"   Margin="12,118,10,10" av:ItemsSource="{av:SampleData ItemCount=5}" SelectionChanged="listExtraSkills_SelectionChanged">
+        <ListBox x:Name="listExtraSkills" ItemsSource="{Binding CheckList}"   Margin="12,118,10,-49" av:ItemsSource="{av:SampleData ItemCount=5}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <CheckBox x:Name="chkitems" Content="{Binding TheText}" IsChecked="{Binding IsSelected}" IsEnabled="{Binding IsReleased}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Label Content="Actions" HorizontalAlignment="Left"  Margin="12,89,0,0" VerticalAlignment="Top" Width="79" Height="29" />
+        <!--<Label Content="Actions" HorizontalAlignment="Left"  Margin="12,89,0,0" VerticalAlignment="Top" Width="79" Height="29" />
+        <Label Content="Custom Command&#xD;&#xA;" HorizontalAlignment="Left" Height="25" Margin="12,335,0,0" VerticalAlignment="Top" Width="181"/>
+        <Label Content="Custom Query&#xD;&#xA;" HorizontalAlignment="Left" Height="25" Margin="193,335,0,0" VerticalAlignment="Top" Width="181"/>
+        <TextBox x:Name="commandText" HorizontalAlignment="Left" Height="20" Margin="12,365,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="174" />
+        <TextBox x:Name="queryText" HorizontalAlignment="Left" Height="20" Margin="201,365,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="174"/>
+        <Label Content="Please just put command / query name here  (Ex: UnGroupedRiskTypes....)" HorizontalAlignment="Left" Height="22" Margin="12,385,0,0" VerticalAlignment="Top" Width="373" FontSize="7"/>-->
 
     </Grid>
 </Window>

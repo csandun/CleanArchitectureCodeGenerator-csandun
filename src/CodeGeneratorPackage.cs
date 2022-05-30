@@ -441,7 +441,6 @@ namespace CleanArchitecture.CodeGenerator
 				inputValue = dialog.Input;
 				selectedCommands = dialog.CheckList.Where(o => o.IsSelected).Select(p => p.TheText).ToList();
 			}
-
 			return (inputValue, selectedCommands);
 		}
 
