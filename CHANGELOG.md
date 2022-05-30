@@ -3,9 +3,6 @@
 - [ ] Add handler and dto for custom usecase.
 - [ ] Update Automapper profilers and repository files for newly generated entities.
 
-Features that have a checkmark are complete and available for
-download in the
-[nightly build](http://vsixgallery.com/extension/6A168388-B6A2-42F9-BA5A-B577D3CD4DB5/).
 
 # Change log
 
