@@ -23,7 +23,7 @@ namespace Camms.Risk.Application.Query.{itemname}
 
             // TODO: change your get by logic (including navigation properties and etc..)
 
-            var result = await _unitOfWork.GetDatabseContext().{itemname}Repository              
+            var result = await _unitOfWork.GetDatabaseContext().{itemname}Repository              
                 .FirstOrDefaultAsync(o => o.Id.Equals(request.Id));
 
             if (result is null)

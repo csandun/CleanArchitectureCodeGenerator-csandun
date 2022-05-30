@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Camms.Risk.Application.Common.GridManupulation;
+using Camms.Risk.Application.Common.KendoGridExtensions;
 using Camms.Risk.Application.Dto.{itemname};
 using Camms.Risk.Application.Interfaces;
 using MediatR;
@@ -8,18 +8,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace {namespace}
 {
-    public class Get{nameofPlural}WithPaginationQueryHandler : IRequestHandler<Get{nameofPlural}WithPaginationQuery, DataSourceResult<{itemname}Dto>>
+    public class Get{nameofPlural}QueryHandler : IRequestHandler<Get{nameofPlural}Query, DataSourceResult<{itemname}Dto>>
     {
         private readonly IRiskUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public Get{nameofPlural}WithPaginationQueryHandler(IRiskUnitOfWork unitOfWork, IMapper mapper)
+        public Get{nameofPlural}QueryHandler(IRiskUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public async Task<DataSourceResult<{itemname}Dto>> Handle(Get{nameofPlural}WithPaginationQuery request, CancellationToken cancellationToken)
+        public async Task<DataSourceResult<{itemname}Dto>> Handle(Get{nameofPlural}Query request, CancellationToken cancellationToken)
         {
             // TODO:  implement paging query logic here.
 
