@@ -12,6 +12,15 @@ download in the
 These are the changes to each version that has been released
 on the official Visual Studio extension gallery.
 
+## 0.4
+
+**2022-05-30**
+
+- [x] Update paging template
+- [x] Change logic to get entities
+- [x] add dtos
+- [x] bug fixers
+
 ## 0.3
 
 **2022-05-01**
